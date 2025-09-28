@@ -380,6 +380,7 @@
             animation-delay: calc(var(--i) * 0.1s);
             width: 100%;
             max-width: 350px;
+            max-height: 800px;
             display: flex;
             flex-direction: column;
         }
@@ -443,8 +444,8 @@
             }
 
             .product-image {
-                height: auto;              /* ไม่ fix ความสูง */
-                aspect-ratio: 1 / 0.5;       /* รักษาสัดส่วนรูป */
+                max-height: auto;              /* ไม่ fix ความสูง */
+                aspect-ratio: 1 / 1;       /* รักษาสัดส่วนรูป */
             }
 
             .filter-container {
