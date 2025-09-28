@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>👑 Finnz Pharmacy 🧪💊</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00a86b;
+            --secondary: #40e0d0;
+            --accent: #ff6b6b;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        body {
+            font-family: 'Kanit', sans-serif;
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            min-height: 100vh;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255, 255, 255, 0.05) 10px,
+                rgba(255, 255, 255, 0.05) 20px
+            );
+            animation: slide 20s linear infinite;
+        }
+
+        @keyframes slide {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #00a86b 0%, #40e0d0 100%);
+            color: white;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        /* Search Bar */
+        .search-container {
+            position: relative;
+            width: 300px;
+            margin: 1rem 0;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 12px 45px 12px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: #008f5b;
+            transform: translateY(-50%) scale(1.2);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .filter-title {
+            font-size: 1.5rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .category-filters {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .category-btn {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .category-btn:hover::before {
+            left: 100%;
+        }
+
+        .category-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .category-btn.active {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            transform: scale(1.1);
+        }
+
+        .sort-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sort-select {
+            padding: 10px 15px;
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            background: white;
+            color: var(--dark);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sort-select:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            animation: cardFloat 3s ease-in-out infinite;
+            animation-delay: calc(var(--i) * 0.1s);
+            width: auto;   /* กำหนดความกว้างการ์ด */
+            height: auto;  /* กำหนดความสูงการ์ด */
+            max-width: 100%; /* กันแตกในมือถือ */
+        }
+
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 10;
+            animation: bounce 2s infinite;
+        }
+                /* สำหรับมือถือจอเล็กกว่า 480px */
+        @media (max-width: 480px) {
+            .search-container {
+                max-width: 100%;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr; /* แสดงทีละ 1 ชิ้น */
+            }
+
+            .product-image {
+                height: auto;              /* ไม่ fix ความสูง */
+                aspect-ratio: 1 / 1;       /* รักษาสัดส่วนรูป */
+            }
+
+            .filter-container {
+                flex-direction: column;    /* filter ลงมาเรียงแนวตั้ง */
+                gap: 0.5rem;
+            }
+        }
+
+        /* ทำให้ font ปรับตามจอ */
+        body {
+            font-size: clamp(14px, 2vw, 16px);
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        
+        .product-image {
+            width: 100%;
+            height: 70%;
+            object-fit: cover;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(45deg);
+            animation: shine 5s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-category {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .product-name {
+            font-size: 1.2rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .product-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .price-tag {
+            animation: priceGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes priceGlow {
+            0%, 100% { text-shadow: 0 0 5px rgba(0, 168, 107, 0.3); }
+            50% { text-shadow: 0 0 20px rgba(0, 168, 107, 0.6); }
+        }
+
+        .buy-button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #00a86b 0%, #40e0d0 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .buy-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .buy-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .buy-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 168, 107, 0.4);
+        }
+
+        /* Line Contact Modal */
+        /* Line Contact Modal */
+        .line-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .line-modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            animation: modalSlideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: scale(0.7) translateY(100px);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--accent);
+            transform: rotate(90deg);
+        }
+
+        .line-info {
+            margin-top: 1rem;
+        }
+
+        .line-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1rem;
+            background: #00c300;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            animation: lineWobble 2s ease-in-out infinite;
+        }
+
+        @keyframes lineWobble {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-5deg); }
+            75% { transform: rotate(5deg); }
+        }
+
+        .line-id {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin: 1rem 0;
+            padding: 1rem;
+            background: #f0f8ff;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .line-qr {
+            width: 200px;
+            height: 200px;
+            margin: 1rem auto;
+            background: #f0f0f0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: #999;
+            border: 3px solid var(--primary);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-5px) rotate(360deg);
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 3000;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .search-container {
+                width: 100%;
+                max-width: 400px;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 1rem;
+            }
+
+            .filter-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .category-filters {
+                justify-content: center;
+            }
+        }
+
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #00c300 0%, #00e600 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0, 195, 0, 0.4);
+            z-index: 1500;
+            animation: fabPulse 2s infinite;
+            transition: all 0.3s ease;
+        }
+
+        @keyframes fabPulse {
+            0%, 100% { 
+                box-shadow: 0 5px 20px rgba(0, 195, 0, 0.4);
+            }
+            50% { 
+                box-shadow: 0 5px 30px rgba(0, 195, 0, 0.8);
+            }
+        }
+
+        .fab:hover {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            background: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: none;
+            animation: slideInRight 0.5s ease;
+            z-index: 2500;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .toast.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">💊</div>
+                <span>Finnz Pharmacy</span>
+            </div>
+            <div class="search-container">
+                <input type="text" class="search-bar" id="searchInput" placeholder="ค้นหายาที่ต้องการ...">
+                <button class="search-btn" onclick="searchProducts()">🔍</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <div class="filter-header">
+                <div class="filter-title">
+                    <span>🏷️</span>
+                    <span>หมวดหมู่สินค้า</span>
+                </div>
+            </div>
+            <div class="category-filters">
+                <button class="category-btn active" onclick="filterCategory('all')">ทั้งหมด</button>
+                <button class="category-btn" onclick="filterCategory('Alprazolam')">สายม่วง Alprazolam</button>
+                <button class="category-btn" onclick="filterCategory('Clonazepam')">สายขาว Clonazepam</button>
+                <button class="category-btn" onclick="filterCategory('สายชิล')">สายชิล</button>
+                <button class="category-btn" onclick="filterCategory('สายดม ฮ๊อต Rita')">สายดม ฮ๊อต Rita</button>
+                <button class="category-btn" onclick="filterCategory('สายจูน ของนอก')">สายจูน ของนอก</button>
+            </div>
+        </div>
+
+        <!-- Product Grid -->
+        <div class="product-grid" id="productGrid">
+            <!-- Products will be dynamically added here -->
+        </div>
+    </div>
+
+    <!-- Line Contact Modal -->
+    <div class="line-modal" id="lineModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeLineModal()">&times;</span>
+            <div class="line-icon">📱</div>
+            <h2>ติดต่อสั่งซื้อผ่าน LINE</h2>
+            <div class="line-info">
+                <div class="line-id">LINE ID: <a href="https://lin.ee/7qnmf1K" target="_blank" style="color: #00c300; text-decoration: none;"> https://lin.ee/7qnmf1K
+                    </a>
+                </div>
+                <div class="line-qr">
+                    <img src="images/line-qr.png" alt="LINE QR Code" style="width:150px; height:150px;">
+                </div>
+                <p style="margin-top: 1rem; color: #666;">
+                    📍 เปิดบริการทุกวัน<br>
+                    📦 ไม่มีปลายทาง<br>
+                    💊 ยาแท้ 100% 
+                </p>
+                <p id="selectedProduct" style="margin-top: 1rem; padding: 1rem; background: #f0f8ff; border-radius: 10px; color: var(--dark);"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <div class="fab" onclick="showLineModal()">
+        💬
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span id="toastMessage">✨ กรุณาติดต่อผ่าน LINE เพื่อสั่งซื้อ</span>
+    </div>
+
+    <!-- Loading -->
+    <div class="loading" id="loading">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <h3>Finnz Pharmacy - ร้านขายยาออนไลน์</h3>
+            <div class="social-links">
+            </div>
+            <p style="margin-top: 1rem; font-size: 0.9rem;">© 2024 Finnz Pharmacy. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Product Data
+        const products = [
+            // หมวดหมู่สินค้า: ยาทั่วไป
+            { id: 1, name: "Alpranax 0.5mg", category: "Alprazolam", price: [150, 450], description: "1 แผง 150 1 กล่อง 450 ส่งฟรี +🎁", image: "images/LINE_ALBUM_สายม่วง Alprazolam_250928_1.jpg" },
+            { id: 2, name: "Alprazolam 0.25mg", category: "Alprazolam", price: [150], description: "1 แผง 150", image: "images/LINE_ALBUM_สายม่วง Alprazolam_250928_2.jpg" },
+            { id: 3, name: "Xanax Pfizer 0.5mg", category: "Alprazolam", price: [120, 150, 450], description: "1 แผง 150 1 กล่อง 450 ส่งฟรี +🎁", image: "images/LINE_ALBUM_สายม่วง Alprazolam_250928_3.jpg" },
+            { id: 4, name: "Xanax Pfizer 0.5mg ( หลังแดง )", category: "Alprazolam", price: [950], description: "1 กล่อง 950 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_สายม่วง Alprazolam_250928_4.jpg" },
+            { id: 5, name: "Axprazol 0.5mg", category: "Alprazolam", price: [130, 600, 950], description: "1 แผง 130 5 แผง 600 ส่งฟรี +🎁 1 กล่อง 950 ส่งฟรี +🎁", image: "images/LINE_ALBUM_สายม่วง Alprazolam_250928_5.jpg" },
+            { id: 6, name: "Asolan 0.5mg", category: "Alprazolam", price: [130, 600, 950], description: "1 แผง 130 5 แผง 600 ส่งฟรี +🎁 1 กล่อง 950 ส่งฟรี +🎁", image: "images/LINE_ALBUM_สายม่วง Alprazolam_250928_6.jpg" },
+            { id: 7, name: "Alprazolam Viatris 0.5mg", category: "Alprazolam", price: [950], description: "1 กล่อง 950 ส่งฟรี + 🎁", badge: "ขายดี", image: "images/LINE_ALBUM_สายม่วง Alprazolam_250928_7.jpg" },
+            { id: 8, name: "Alprazolam Viatris 0.5mg", category: "Alprazolam", price: [500, 950], description: "1 แผง 500 ( 15 เม็ด )1 กล่อง 950 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_สายม่วง Alprazolam_250928_8.jpg" },
+            { id: 9, name: "ปากี 1mg", category: "Alprazolam", price: [650, 5000], description: "1 แผง 650 1 กล่อง 2,5000 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_สายม่วง Alprazolam_250928_9.jpg" },
+            { id: 10, name: "Alprazolam EG", category: "Alprazolam", price: [950], description: "1 กล่อง 950 ส่งฟรี + 🎁 ", image: "images/LINE_ALBUM_สายม่วง Alprazolam_250928_10.jpg" },
+            { id: 11, name: "Zentiva 0.5mg", category: "Alprazolam", price: [1000], description: "1 กล่อง 1000 ส่งฟรี +🎁", badge: "แนะนำ", image: "images/LINE_ALBUM_สายม่วง Alprazolam_250928_11.jpg" },
+            { id: 12, name: "Xanax Pfizer 0.5mg ( UPJOHN )", category: "Alprazolam", price: [250, 1200, 2100], description: "1 แผง 250 5 แผง 1,200 ส่งฟรี + 🎁 1 กล่อง 2,000 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_สายม่วง Alprazolam_250928_12.jpg" },
+            { id: 13, name: "Xanax viatris0.5", category: "Alprazolam", price: [950], description: "1 กล่อง 950 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_สายม่วง Alprazolam_250928_13.jpg" },
+            { id: 14, name: "Calcium + D3", category: "Alprazolam", price: [320], description: "บำรุงกระดูกและฟัน", image: "images/LINE_ALBUM_สายม่วง Alprazolam_250928_14.jpg" },
+            { id: 15, name: "MTN 1mg", category: "Alprazolam", price: [250, 1200, 2000], description: "1 แผง 2505 แผง 1,200 ส่งฟรี + 🎁 1 กล่อง 2,000 ส่งฟรี + 🎁", badge: "พรีเมี่ยม", image: "images/LINE_ALBUM_สายม่วง Alprazolam_250928_15.jpg" },
+            
+            { id: 16, name: "Rivotril", category: "Clonazepam", price: [35, 300, 650, 1200, 2000], description: "1 เม็ด 35 10 เม็ด 300  25 เม็ด 650 ส่งฟรี + 🎁  50 เม็ด 1,200 ส่งฟรี + 🎁  1 กระปุก 2,000 ส่งฟรี + 🎁", badge: "NEW", image: "images/LINE_ALBUM_สายขาว โรเช่ คอนเรัก_250928_1.jpg" },
+            //{ id: 17, name: "Povanil 2", category: "Clonazepam", price: [150, 700, 1150, 2250, 3550], description: "1 แผง 150 5 แผง 700 ส่งฟรี + 🎁 10 แผง 1,150 ส่งฟรี + 🎁 25 แผง 2,250 ส่งฟรี + 🎁 1 กล่อง 3,550 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_สายขาว โรเช่ คอนเรัก_250928_2.jpg" },
+            { id: 18, name: "คลอซีแพม หลังม่วง CLOZEPAM 2.0", category: "Clonazepam", price: [150, 700, 1150, 2250, 3550], description: "1 แผง 150 5 แผง 700 ส่งฟรี + 🎁  10 แผง 1,150 ส่งฟรี + 🎁 25 แผง 2,250 ส่งฟรี + 🎁 1 กล่อง 3,550 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_สายขาว โรเช่ คอนเรัก_250928_3.jpg" },
+            { id: 19, name: "Povanil 2", category: "Clonazepam", price: [150, 700, 1150, 2250, 3550], description: "1 แผง 150 5 แผง 700 ส่งฟรี + 🎁 10 แผง 1,150 ส่งฟรี + 🎁 25 แผง 2,250 ส่งฟรี + 🎁 1 กล่อง 3,550 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_สายขาว โรเช่ คอนเรัก_250928_4.jpg" },
+            { id: 20, name: "Lexopam 6", category: "Clonazepam", price: [250, 1200, 2000], description: "1 แผง 250 5 แผง 1200 + ส่งฟรี 🎁 1 กล่อง 2,000 + ส่งฟรี 🎁", image: "images/LINE_ALBUM_สายขาว โรเช่ คอนเรัก_250928_5.jpg" },
+            { id: 21, name: "โรเช่ไทย CLONARIL 2.0", category: "Clonazepam", price: [170, 750, 1300, 3950], description: "1 แผง 170 5 แผง 750 ส่งฟรี + 🎁 10 แผง 1,300 ส่งฟรี + 🎁 25 แผง 2,550 ส่งฟรี + 🎁 1 กล่อง 3,950 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_สายขาว โรเช่ คอนเรัก_250928_7.jpg" },
+            { id: 22, name: "พรีนาพริล Prenapil 2.0", category: "Clonazepam", price: [180, 800, 1350, 2650, 4350], description: "1 แผง 180 5 แผง 800 ส่งฟรี + 🎁  10 แผง 1,350 ส่งฟรี + 🎁  25 แผง 2,650 ส่งฟรี + 🎁  1 กล่อง 4,350 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_สายขาว โรเช่ คอนเรัก_250928_8.jpg" },
+            { id: 23, name: "คอนดรัก CONVUSIL 2.0", category: "Clonazepam", price: [150, 700, 1150, 2200, 3550], description: "1 แผง 150 5 แผง 700 ส่งฟรี + 🎁 10 แผง 1,150 ส่งฟรี + 🎁 25 แผง 2,200 ส่งฟรี + 🎁 1 กล่อง 3,550 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_สายขาว โรเช่ คอนเรัก_250928_9.jpg" },
+            
+            { id: 24, name: "Supreme/collagen", category: "สายชิล", price: [2500], description: "Supreme/collagen 1 กระปุก 2500", image: "images/LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_1.jpg" },
+            { id: 25, name: "Gabapentin 300mg", category: "สายชิล", price: [120], description: "Gabapentin 300mg 1 เม็ด 120", image: "images/LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_2.jpg" },
+            { id: 26, name: "MADOLA", category: "สายชิล", price: [50, 1650], description: "MADOLA 1 เม็ด 50, 1 กล่อง 1650", image: "images/LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_3.jpg" },
+            { id: 27, name: "FATEX", category: "สายชิล", price: [85, 1650], description: "FATEX 1 เม็ด 85, 1 กล่อง 1650", image: "images/LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_4.jpg" },
+            { id: 28, name: "Axioda", category: "สายชิล", price: [900], description: "Axioda 1 กระปุก 900", image: "images/LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_5.jpg" },
+            { id: 29, name: "Diazepam10 D10", category: "สายชิล", price: [550], description: "Diazepam10 D10 50 เม็ด 550", image: "images/LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_6.jpg" },
+            { id: 30, name: "KAMAGRA Oral jelly", category: "สายชิล", price: [60, 250], description: "KAMAGRA Oral jelly 1 เม็ด 60, 1 กล่อง 250", image: "images/LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_7.jpg" },
+            { id: 31, name: "SUPER KAMAGRA", category: "สายชิล", price: [100, 350], description: "SUPER KAMAGRA 1 เม็ด 100, 1 กล่อง 350", image: "images/LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_8.jpg" },
+            { id: 32, name: "มอร์ฟีนน้ำ", category: "สายชิล", price: [1000], description: "มอร์ฟีนน้ำ 1 ขวด 1000", image: "images/LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_9.jpg" },
+            { id: 33, name: "POLIZEP", category: "สายชิล", price: [100], description: "POLIZEP 1 เม็ด 100", image: "images/LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_10.jpg" },
+            { id: 34, name: "Ketamine", category: "สายชิล", price: [1550], description: "Ketamine 1 ขวด 1550", image: "images/LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_11.jpg" },
+            { id: 35, name: "TRAMADOL", category: "สายชิล", price: [50, 1650], description: "TRAMADOL 1 เม็ด 50, 1 กล่อง 1650", image: "images/LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_12.jpg" },
+            { id: 36, name: "KAMAGRA LOVEGRA", category: "สายชิล", price: [80, 300], description: "KAMAGRA LOVEGRA 1 เม็ด 80, 1 กล่อง 300", image: "images/LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_13.jpg" },
+            { id: 37, name: "TRAMED5", category: "สายชิล", price: [50, 500], description: "TRAMED5 1 เม็ด 50, 1 กล่อง 500", image: "images/LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_14.jpg" },
+            { id: 38, name: "NEUTEPINE 200mg", category: "สายชิล", price: [250, 700], description: "NEUTEPINE 200mg 1 เม็ด 250, 1 กล่อง 700", image: "images/LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_15.jpg" },
+            { id: 39, name: "ZAMIR 30mg", category: "สายชิล", price: [300, 1400], description: "ZAMIR 30mg 1 เม็ด 300, 1 กล่อง 1400 + ส่งฟรี 🎁", image: "images/LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_16.jpg" },
+            { id: 40, name: "ZAMIR 15mg", category: "สายชิล", price: [250, 1200], description: "ZAMIR 15mg 1 เม็ด 250, 1 กล่อง 1200 + ส่งฟรี 🎁", image: "images/LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_17.jpg" },
+            
+            { id: 41, name: "Ritaline10", category: "สายดม ฮ๊อต Rita", price: [800, 7500], description: "Ritaline10 1 แผง 800, 1 กล่อง 7,500 + ส่งฟรี 🎁", image: "images/LINE_ALBUM_สายดม ฮ๊อต Rita_250928_3.jpg" },
+            { id: 42, name: "Rubifen10", category: "สายดม ฮ๊อต Rita", price: [350, 3000], description: "Rubifen10 1 แผง 350, 1 กล่อง 3,000 + ส่งฟรี 🎁", image: "images/LINE_ALBUM_สายดม ฮ๊อต Rita_250928_2.jpg" },
+            { id: 43, name: "Ritaline LA", category: "สายดม ฮ๊อต Rita", price: [4300], description: "Ritaline LA 1 กล่อง 4,300 + ส่งฟรี 🎁", image: "images/LINE_ALBUM_สายดม ฮ๊อต Rita_250928_1.jpg" },
+            { id: 44, name: "โรฮิบนอล 542", category: "Alprazolam", price: [450, 900, 1200], description: "1 แผง 450, 2 แผง 900 + ส่งฟรี 🎁, 1 กล่อง 1,200 + ส่งฟรี 🎁", image: "images/559725.jpg" },
+            
+            { id: 45, name: "Promethazine 25mg ( อัดเม็ด )", category: "สายจูน ของนอก", price: [700], description: "1 กล่อง 700 ส่งฟรี + 🎁 1 กระปุก 700 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_ของนอก สายจูน_250928_1.jpg" },
+            { id: 46, name: "Nan Codeine", category: "สายจูน ของนอก", price: [150, 700, 1200], description: "1 แผง 150 5 แผง 700 ส่งฟรี + 🎁 1 กล่อง 1,200 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_ของนอก สายจูน_250928_2.jpg" },
+            { id: 47, name: "KINAL CODEINE", category: "สายจูน ของนอก", price: [1200], description: "1 กล่อง 1,200 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_ของนอก สายจูน_250928_3.jpg" },
+            { id: 48, name: "Paderyl 19.5 ( กล่อง )", category: "สายจูน ของนอก", price: [550], description: "1 กล่อง 550 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_ของนอก สายจูน_250928_4.jpg" },
+            { id: 49, name: "Tussipax", category: "สายจูน ของนอก", price: [550], description: "1 กล่อง 550 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_ของนอก สายจูน_250928_5.jpg" },
+            { id: 50, name: "Promaphec 25mg", category: "สายจูน ของนอก", price: [600], description: "1 กล่อง 600 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_ของนอก สายจูน_250928_6.jpg" },
+            { id: 51, name: "PPM", category: "สายจูน ของนอก", price: [500], description: "1 กล่อง 500 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_ของนอก สายจูน_250928_7.jpg" },
+            { id: 52, name: "Milam15mg", category: "สายจูน ของนอก", price: [1500], description: "1 แผง 1500 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_ของนอก สายจูน_250928_8.jpg" },
+            { id: 53, name: "Midorest15mg", category: "สายจูน ของนอก", price: [1500], description: "1 แผง 1500 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_ของนอก สายจูน_250928_9.jpg" },
+            { id: 54, name: "ZEPAM10", category: "สายจูน ของนอก", price: [1200], description: "1 กล่อง 1,200 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_ของนอก สายจูน_250928_10.jpg" },
+            { id: 55, name: "Domicum 7.5", category: "สายจูน ของนอก", price: [750], description: "1 แผง 750 + ส่งฟรี 🎁", image: "images/LINE_ALBUM_ของนอก สายจูน_250928_11.jpg" },
+            { id: 56, name: "ไฟว์ ครีบ happy5", category: "สายจูน ของนอก", price: [170, 1550], description: "1 แผง 170, 1 กล่อง 1,550 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_ของนอก สายจูน_250928_12.jpg" },
+        ];
+
+        let currentCategory = "all";
+        let currentSort = "priceDesc";
+
+        // แสดงสินค้า
+        function displayProducts() {
+            const grid = document.getElementById("productGrid");
+            grid.innerHTML = "";
+
+            let filtered = products.filter(p => currentCategory === "all" || p.category === currentCategory);
+
+            // ค้นหา
+            const searchValue = document.getElementById("searchInput").value.toLowerCase();
+            if (searchValue) {
+                filtered = filtered.filter(p => p.name.toLowerCase().includes(searchValue));
+            }
+
+            // เรียงลำดับ
+            if (currentSort === "priceDesc") {
+                filtered.sort((a, b) => b.price - a.price);
+            } else if (currentSort === "priceAsc") {
+                filtered.sort((a, b) => a.price - b.price);
+            } else if (currentSort === "name") {
+                filtered.sort((a, b) => a.name.localeCompare(b.name, "th"));
+            }
+
+            // วาดสินค้า
+            filtered.forEach((product, i) => {
+                const card = document.createElement("div");
+                card.className = "product-card";
+                card.style.setProperty("--i", i);
+
+                card.innerHTML = `
+                    ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ""}
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}" style="width:100%; height:100%; object-fit:cover;">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">${product.category}</div>
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-description">${product.description}</div>
+                        <div class="product-price">
+                            <span class="price-tag">฿${product.price}</span>
+                        </div>
+                        <button class="buy-button" onclick="buyProduct('${product.name}')">สั่งซื้อ</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // ค้นหา
+        function searchProducts() {
+            displayProducts();
+        }
+
+        // กรองตามหมวดหมู่
+        function filterCategory(cat) {
+            currentCategory = cat;
+            document.querySelectorAll(".category-btn").forEach(btn => btn.classList.remove("active"));
+            event.target.classList.add("active");
+            displayProducts();
+        }
+
+        // เรียงลำดับ
+        function sortProducts() {
+            currentSort = document.getElementById("sortSelect").value;
+            displayProducts();
+        }
+
+        // เปิด modal line
+        function showLineModal(productName = "") {
+            document.getElementById("lineModal").classList.add("show");
+            document.getElementById("selectedProduct").innerText = productName ? `🛒 สินค้าที่เลือก: ${productName}` : "";
+        }
+
+        // ปิด modal line
+        function closeLineModal() {
+            document.getElementById("lineModal").classList.remove("show");
+        }
+
+        // กดปุ่มซื้อ
+        function buyProduct(name) {
+            showLineModal(name);
+            showToast(`✨ กรุณาติดต่อ LINE เพื่อสั่งซื้อ: ${name}`);
+        }
+
+        // Toast
+        function showToast(msg) {
+            const toast = document.getElementById("toast");
+            document.getElementById("toastMessage").innerText = msg;
+            toast.classList.add("show");
+            setTimeout(() => {
+                toast.classList.remove("show");
+            }, 3000);
+        }
+
+        // โหลดครั้งแรก
+        window.onload = displayProducts;
+    </script>
+</body>
