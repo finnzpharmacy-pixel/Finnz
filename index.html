@@ -378,9 +378,14 @@
             position: relative;
             animation: cardFloat 3s ease-in-out infinite;
             animation-delay: calc(var(--i) * 0.1s);
-            width: 100%;   /* กำหนดความกว้างการ์ด */
-            height: 120%;  /* กำหนดความสูงการ์ด */
-            max-width: auto; /* กันแตกในมือถือ */
+            width: 100%;
+            max-width: 350px;
+            min-width: 0;
+            margin: 0 auto;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+        }
         }
 
         @keyframes cardFloat {
