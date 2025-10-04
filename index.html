@@ -933,12 +933,7 @@
             } else if (currentSort === "priceAsc") {
                 filtered.sort((a, b) => (a.price || a.boxPrice || 0) - (b.price || b.boxPrice || 0));
             }
-            else if (currentSort === "nameAsc") {
-                filtered.sort((a, b) => a.name.localeCompare(b.name));
-            } else if (currentSort === "nameDesc") {
-                filtered.sort((a, b) => b.name.localeCompare(a.name));
-            }
-
+            
             // วาดสินค้า
             filtered.forEach((product, i) => {
                 const card = document.createElement("div");
