@@ -928,12 +928,12 @@
             }
 
             // เรียงลำดับ
-            if (currentSort === "priceDesc") {
+           /* if (currentSort === "priceDesc") {
                 filtered.sort((a, b) => (b.price || b.boxPrice || 0) - (a.price || a.boxPrice || 0));
             } else if (currentSort === "priceAsc") {
                 filtered.sort((a, b) => (a.price || a.boxPrice || 0) - (b.price || b.boxPrice || 0));
-            }
-            
+            }*/
+
             // วาดสินค้า
             filtered.forEach((product, i) => {
                 const card = document.createElement("div");
@@ -961,8 +961,6 @@
                 grid.appendChild(card);
             });
         }
-
-        products.sort((a, b) => b.price - a.price);
 
         // ค้นหา
         function searchProducts() {
