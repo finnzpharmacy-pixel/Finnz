@@ -19,8 +19,7 @@
             --light: #ecf0f1;
             --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
- 
-        
+
         body {
             font-family: 'Kanit', sans-serif;
             background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
@@ -123,6 +122,7 @@
             border-radius: 25px;
             font-size: 1rem;
             background: rgba(255, 255, 255, 0.9);
+            -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
         }
@@ -507,7 +507,8 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px); 
             z-index: 2000;
             animation: modalFadeIn 0.3s ease;
         }
@@ -770,7 +771,7 @@
         <div class="header-content">
             <div class="logo">
                 <div class="logo-icon">
-                    <img src="72429.jpg" alt="Finnz Logo" style="width: 40px; height: 40px; border-radius: 50%;">
+                    <img src="images/72429.jpg" alt="Finnz Logo" style="width: 40px; height: 40px; border-radius: 50%;">
                 </div>
                 <span>Finnz Pharmacy</span>
             </div>
@@ -792,12 +793,13 @@
                 </div>
             </div>
             <div class="category-filters">
-                <button class="category-btn active" onclick="filterCategory('all')">ทั้งหมด</button>
-                <button class="category-btn" onclick="filterCategory('Alprazolam')">สายม่วง Alprazolam</button>
-                <button class="category-btn" onclick="filterCategory('Clonazepam')">สายขาว Clonazepam</button>
-                <button class="category-btn" onclick="filterCategory('สายชิล')">สายชิล</button>
-                <button class="category-btn" onclick="filterCategory('สายดม ฮ๊อต Rita')">สายดม ฮ๊อต Rita</button>
-                <button class="category-btn" onclick="filterCategory('สายจูน ของนอก')">สายจูน ของนอก</button>
+                <button class="category-btn active" onclick="filterCategory(event, 'all')">ทั้งหมด</button>
+                <button class="category-btn" onclick="filterCategory(event, 'Alprazolam')">สายม่วง Alprazolam</button>
+                <button class="category-btn" onclick="filterCategory(event, 'Clonazepam')">สายขาว Clonazepam</button>
+                <button class="category-btn" onclick="filterCategory(event, 'สายชิล')">สายชิล</button>
+                <button class="category-btn" onclick="filterCategory(event, 'สายดม ฮ๊อต Rita')">สายดม ฮ๊อต Rita</button>
+                <button class="category-btn" onclick="filterCategory(event, 'สายจูน ของนอก')">สายจูน ของนอก</button>
+
             </div>
         </div>
 
@@ -818,7 +820,7 @@
                     </a>
                 </div>
                 <div class="line-qr">
-                    <img src="line-qr.png" alt="LINE QR Code" style="width:150px; height:150px;">
+                    <img src="images/line-qr.png" alt="LINE QR Code" style="width:150px; height:150px;">
                 </div>
                 <p style="margin-top: 1rem; color: #666;">
                     📍 เปิดบริการทุกวัน<br>
@@ -859,63 +861,63 @@
         // Product Data
         const products = [
 
-            { id: 1, name: "MTN 1.0mg", category: "Alprazolam", price: "250/2000", description: "1 แผง 250 5 แผง 1,200 ส่งฟรี + 🎁 1 กล่อง 2,000 ส่งฟรี + 🎁", badge: "พรีเมี่ยม", image: "LINE_ALBUM_สายม่วง Alprazolam_250928_15.jpg" },
-            { id: 2, name: "Ritaline10", category: "สายดม ฮ๊อต Rita", price: "800/7500", description: "1 แผง 800, 1 กล่อง 7,500 + ส่งฟรี 🎁", image: "LINE_ALBUM_สายดม ฮ๊อต Rita_250928_3.jpg" },
-            { id: 3, name: "Rubifen10", category: "สายดม ฮ๊อต Rita", price: "350/3000", description: "1 แผง 350, 1 กล่อง 3,000 + ส่งฟรี 🎁", image: "LINE_ALBUM_สายดม ฮ๊อต Rita_250928_2.jpg" },
-            { id: 4, name: "โรฮิบนอล 542", category: "Alprazolam", price: "450/1200", description: "1 แผง 450, 2 แผง 900 + ส่งฟรี 🎁, 1 กล่อง 1,200 + ส่งฟรี 🎁", image: "559725.jpg" },
-            { id: 5, name: "Xanax 1.0mg ปากี", category: "Alprazolam", price: "500/1350", description: "1 แผง 500 ส่งฟรี + 🎁 1 กล่อง 1,350 ส่งฟรี + 🎁", image: "LINE_ALBUM_สายม่วง Alprazolam_250928_14.jpg" },
-            { id: 6, name: "Xanax Pfizer 0.5mg ( UPJOHN )", category: "Alprazolam", price: "250/2100", description: "1 แผง 250 5 แผง 1,200 ส่งฟรี + 🎁 1 กล่อง 2,000 ส่งฟรี + 🎁", image: "LINE_ALBUM_สายม่วง Alprazolam_250928_12.jpg" },
-            { id: 7, name: "Alprazolam Viatris 0.5mg", category: "Alprazolam", price: "500/950", description: "1 แผง 500 ( 15 แผง )1 กล่อง 950 ส่งฟรี + 🎁", image: "LINE_ALBUM_สายม่วง Alprazolam_250928_8.jpg" },
-            { id: 8, name: "คอนดรัก CONVUSIL 2.0mg", category: "Clonazepam", price: "150/3550", description: "1 แผง 150 5 แผง 700 ส่งฟรี + 🎁 10 แผง 1,150 ส่งฟรี + 🎁 25 แผง 2,200 ส่งฟรี + 🎁 1 กล่อง 3,550 ส่งฟรี + 🎁", image: "LINE_ALBUM_สายขาว โรเช่ คอนเรัก_250928_9.jpg" },
-            { id: 9, name: "โรเช่ไทย CLONARIL 2.0mg", category: "Clonazepam", price: "170/3950", description: "1 แผง 170 5 แผง 750 ส่งฟรี + 🎁 10 แผง 1,300 ส่งฟรี + 🎁 25 แผง 2,550 ส่งฟรี + 🎁 1 กล่อง 3,950 ส่งฟรี + 🎁", image: "LINE_ALBUM_สายขาว โรเช่ คอนเรัก_250928_7.jpg" },
-            { id: 10, name: "พรีนาพริล Prenapil 2.0mg", category: "Clonazepam", price: "180/4200", description: "1 แผง 180 5 แผง 800 ส่งฟรี + 🎁  10 แผง 1,350 ส่งฟรี + 🎁  25 แผง 2,650 ส่งฟรี + 🎁  1 กล่อง 4,200 ส่งฟรี + 🎁", image: "LINE_ALBUM_สายขาว โรเช่ คอนเรัก_250928_8.jpg" },
-            { id: 11, name: "Alpranax 0.5mg", category: "Alprazolam", price: "150/450", description: "1 แผง 150 1 กล่อง 450 ส่งฟรี +🎁", image: "LINE_ALBUM_สายม่วง Alprazolam_250928_1.jpg" },
-            { id: 12, name: "Alprazolam 0.25mg", category: "Alprazolam", price: "150", description: "1 แผง 150", image: "LINE_ALBUM_สายม่วง Alprazolam_250928_2.jpg" },
-            { id: 13, name: "Xanax Pfizer 0.5mg", category: "Alprazolam", price: "250/2100", description: "1 แผง 250 1 กล่อง 2100 ส่งฟรี +🎁", image: "LINE_ALBUM_สายม่วง Alprazolam_250928_3.jpg" },
-            { id: 14, name: "Xanax Pfizer 0.5mg ( หลังแดง )", category: "Alprazolam", price: "950", description: "1 กล่อง 950 ส่งฟรี + 🎁", image: "LINE_ALBUM_สายม่วง Alprazolam_250928_4.jpg" },
-            { id: 15, name: "Axprazol 0.5mg", category: "Alprazolam", price: "130/950", description: "1 แผง 130 5 แผง 600 ส่งฟรี +🎁 1 กล่อง 950 ส่งฟรี +🎁", image: "LINE_ALBUM_สายม่วง Alprazolam_250928_5.jpg" },
-            { id: 16, name: "Asolan 0.5mg", category: "Alprazolam", price: "130/950", description: "1 แผง 130 5 แผง 600 ส่งฟรี +🎁 1 กล่อง 950 ส่งฟรี +🎁", image: "LINE_ALBUM_สายม่วง Alprazolam_250928_6.jpg" },
-            { id: 17, name: "Alprazolam Viatris 0.5mg", category: "Alprazolam", price: "950", description: "1 กล่อง 950 ส่งฟรี + 🎁", badge: "ขายดี", image: "LINE_ALBUM_สายม่วง Alprazolam_250928_7.jpg" },
-            { id: 18, name: "ปากี 1.0mg", category: "Alprazolam", price: "650/5000", description: "1 แผง 650 1 กล่อง 2,5000 ส่งฟรี + 🎁", image: "LINE_ALBUM_สายม่วง Alprazolam_250928_9.jpg" },
-            { id: 19, name: "Alprazolam EG", category: "Alprazolam", price: "950", description: "1 กล่อง 950 ส่งฟรี + 🎁 ", image: "LINE_ALBUM_สายม่วง Alprazolam_250928_10.jpg" },
-            { id: 20, name: "Zentiva 0.5mg", category: "Alprazolam", price: "1000", description: "1 กล่อง 1000 ส่งฟรี +🎁", badge: "แนะนำ", image: "LINE_ALBUM_สายม่วง Alprazolam_250928_11.jpg" },
-            { id: 21, name: "Xanax viatris0.5mg", category: "Alprazolam", price: "950", description: "1 กล่อง 950 ส่งฟรี + 🎁", image: "LINE_ALBUM_สายม่วง Alprazolam_250928_13.jpg" },
-            { id: 22, name: "Rivotril", category: "Clonazepam", price: "35/2000", description: "1 แผง 35 10 แผง 300  25 แผง 650 ส่งฟรี + 🎁  50 แผง 1,200 ส่งฟรี + 🎁  1 กระปุก 2,000 ส่งฟรี + 🎁", badge: "NEW", image: "LINE_ALBUM_สายขาว โรเช่ คอนเรัก_250928_1.jpg" },
-            //{ id: 17, name: "Povanil 2", category: "Clonazepam", price: "150/3550", description: "1 แผง 150 5 แผง 700 ส่งฟรี + 🎁 10 แผง 1,150 ส่งฟรี + 🎁 25 แผง 2,250 ส่งฟรี + 🎁 1 กล่อง 3,550 ส่งฟรี + 🎁", image: "LINE_ALBUM_สายขาว โรเช่ คอนเรัก_250928_2.jpg" },
-            { id: 23, name: "คลอซีแพม หลังม่วง CLOZEPAM 2.0", category: "Clonazepam", price: "150/3550", description: "1 แผง 150 5 แผง 700 ส่งฟรี + 🎁  10 แผง 1,150 ส่งฟรี + 🎁 25 แผง 2,250 ส่งฟรี + 🎁 1 กล่อง 3,550 ส่งฟรี + 🎁", image: "LINE_ALBUM_สายขาว โรเช่ คอนเรัก_250928_3.jpg" },
-            { id: 24, name: "Povanil 2.0mg", category: "Clonazepam", price: "150/3550", description: "1 แผง 150 5 แผง 700 ส่งฟรี + 🎁 10 แผง 1,150 ส่งฟรี + 🎁 25 แผง 2,250 ส่งฟรี + 🎁 1 กล่อง 3,550 ส่งฟรี + 🎁", image: "LINE_ALBUM_สายขาว โรเช่ คอนเรัก_250928_4.jpg" },
-            { id: 24, name: "Supreme/collagen", category: "สายชิล", price: "2500", description: "1 กระปุก 2500", image: "LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_1.jpg" },
-            { id: 25, name: "Gabapentin 300mg", category: "สายชิล", price: "120", description: "1 แผง 120", image: "LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_2.jpg" },
-            { id: 26, name: "MADOLA", category: "สายชิล", price: "50/1650", description: "1 แผง 50, 1 กล่อง 1650", image: "LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_3.jpg" },
-            { id: 27, name: "FATEX", category: "สายชิล", price: "85/1650", description: "1 แผง 85, 1 กล่อง 1650", image: "LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_4.jpg" },
-            { id: 28, name: "Axioda", category: "สายชิล", price: "900", description: "1 กระปุก 900", image: "LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_5.jpg" },
-            { id: 29, name: "Diazepam10 D10", category: "สายชิล", price: "550", description: "1 แผง 550", image: "LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_6.jpg" },
-            { id: 30, name: "KAMAGRA Oral jelly", category: "สายชิล", price: "60/250", description: "1 ซอง 60, 1 กล่อง 250", image: "LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_7.jpg" },
-            { id: 31, name: "SUPER KAMAGRA", category: "สายชิล", price: "100/350", description: "1 แผง 100, 1 กล่อง 350", image: "LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_8.jpg" },
-            { id: 32, name: "มอร์ฟีนน้ำ", category: "สายชิล", price: "1000", description: "1 ขวด 1000", image: "LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_9.jpg" },
-            { id: 33, name: "POLIZEP", category: "สายชิล", price: "100", description: "1 แผง 100", image: "LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_10.jpg" },
-            { id: 34, name: "Ketamine", category: "สายชิล", price: "1550", description: "1 ขวด 1550", image: "LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_11.jpg" },
-            { id: 35, name: "TRAMADOL", category: "สายชิล", price: "50/1650", description: "1 แผง 50, 1 กล่อง 1650", image: "LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_12.jpg" },
-            { id: 36, name: "KAMAGRA LOVEGRA", category: "สายชิล", price: "80/300", description: "LOVEGRA 1 แผง 80, 1 กล่อง 300", image: "LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_13.jpg" },
-            { id: 37, name: "TRAMED5", category: "สายชิล", price: "50/500", description: "1 แผง 50, 1 กล่อง 500", image: "LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_14.jpg" },
-            { id: 38, name: "NEUTEPINE 200mg", category: "สายชิล", price: "250/700", description: "1 แผง 250, 1 กล่อง 700", image: "LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_15.jpg" },
-            { id: 39, name: "ZAMIR 30mg", category: "สายชิล", price: "300/1400", description: "30mg 1 แผง 300, 1 กล่อง 1400 + ส่งฟรี 🎁", image: "LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_16.jpg" },
-            { id: 40, name: "ZAMIR 15mg", category: "สายชิล", price: "250/1200", description: "1 แผง 250, 1 กล่อง 1200 + ส่งฟรี 🎁", image: "LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_17.jpg" },
-            { id: 41, name: "Lexopam 6", category: "Clonazepam", price: "250/2000", description: "1 แผง 250 5 แผง 1200 + ส่งฟรี 🎁 1 กล่อง 2,000 + ส่งฟรี 🎁", image: "LINE_ALBUM_สายขาว โรเช่ คอนเรัก_250928_5.jpg" },
-            { id: 42, name: "Ritaline LA", category: "สายดม ฮ๊อต Rita", price: "4300", description: "1 กล่อง 4,300 + ส่งฟรี 🎁", image: "LINE_ALBUM_สายดม ฮ๊อต Rita_250928_1.jpg" },
-            { id: 43, name: "Promethazine 25mg ( อัดเม็ด )", category: "สายจูน ของนอก", price: "500", description: "1 กล่อง 500 ส่งฟรี + 🎁", image: "LINE_ALBUM_ของนอก สายจูน_250928_1.jpg" },
-            { id: 44, name: "Nan Codeine", category: "สายจูน ของนอก", price: "150/1200", description: "1 แผง 150 5 แผง 700 ส่งฟรี + 🎁 1 กล่อง 1,200 ส่งฟรี + 🎁", image: "LINE_ALBUM_ของนอก สายจูน_250928_2.jpg" },
-            { id: 45, name: "CODEINE SANT 30", category: "สายจูน ของนอก", price: "600", description: "1 กล่อง 600 ส่งฟรี + 🎁", image: "LINE_ALBUM_ของนอก สายจูน_250928_3.jpg" },
-            { id: 46, name: "Paderyl 19.5 ( กล่อง )", category: "สายจูน ของนอก", price: "550", description: "1 กล่อง 550 ส่งฟรี + 🎁", image: "LINE_ALBUM_ของนอก สายจูน_250928_4.jpg" },
-            { id: 47, name: "Tussipax", category: "สายจูน ของนอก", price: "550", description: "1 กล่อง 550 ส่งฟรี + 🎁", image: "LINE_ALBUM_ของนอก สายจูน_250928_5.jpg" },
-            { id: 48, name: "Promaphec 25mg", category: "สายจูน ของนอก", price: "600", description: "1 กล่อง 600 ส่งฟรี + 🎁", image: "LINE_ALBUM_ของนอก สายจูน_250928_6.jpg" },
-            { id: 49, name: "PPM", category: "สายจูน ของนอก", price: "500", description: "1 กล่อง 500 ส่งฟรี + 🎁", image: "LINE_ALBUM_ของนอก สายจูน_250928_7.jpg" },
-            { id: 50, name: "Milam15mg", category: "สายจูน ของนอก", price: "1500", description: "1 แผง 1500 ส่งฟรี + 🎁", image: "LINE_ALBUM_ของนอก สายจูน_250928_8.jpg" },
-            { id: 51, name: "Midorest15mg", category: "สายจูน ของนอก", price: "1500", description: "1 แผง 1500 ส่งฟรี + 🎁", image: "LINE_ALBUM_ของนอก สายจูน_250928_9.jpg" },
-            { id: 52, name: "ZEPAM10", category: "สายจูน ของนอก", price: "150/1200", description: "1 แผง 150 1 กล่อง 1,200 ส่งฟรี + 🎁", image: "LINE_ALBUM_ของนอก สายจูน_250928_10.jpg" },
-            { id: 53, name: "Domicum 7.5", category: "สายจูน ของนอก", price: "750", description: "1 แผง 750 + ส่งฟรี 🎁", image: "LINE_ALBUM_ของนอก สายจูน_250928_11.jpg" },
-            { id: 54, name: "Happy 5 ( ERIMIN5 )", category: "สายจูน ของนอก", price: "170/1550", description: "1 แผง 170, 1 กล่อง 1,550 ส่งฟรี + 🎁", image: "LINE_ALBUM_ของนอก สายจูน_250928_12.jpg" },
-        ];
+            { id: 1, name: "MTN 1.0mg", category: "Alprazolam", price: 250, boxPrice: 2000, description: "1 แผง 250 5 แผง 1,200 ส่งฟรี + 🎁 1 กล่อง 2,000 ส่งฟรี + 🎁", badge: "พรีเมี่ยม", image: "images/LINE_ALBUM_สายม่วง Alprazolam_250928_15.jpg" },
+            { id: 2, name: "Ritaline10", category: "สายดม ฮ๊อต Rita", price: 800, boxPrice: 7500, description: "1 แผง 800, 1 กล่อง 7,500 + ส่งฟรี 🎁", image: "images/LINE_ALBUM_สายดม ฮ๊อต Rita_250928_3.jpg" },
+            { id: 3, name: "Rubifen10", category: "สายดม ฮ๊อต Rita", price: 350, boxPrice: 3000, description: "1 แผง 350, 1 กล่อง 3,000 + ส่งฟรี 🎁", image: "images/LINE_ALBUM_สายดม ฮ๊อต Rita_250928_2.jpg" },
+            { id: 4, name: "โรฮิบนอล 542", category: "Alprazolam", price: 450, boxPrice: 1200, description: "1 แผง 450, 2 แผง 900 + ส่งฟรี 🎁, 1 กล่อง 1,200 ส่งฟรี + 🎁", image: "images/559725.jpg" },
+            { id: 5, name: "Xanax 1.0mg ปากี", category: "Alprazolam", price: 500, boxPrice: 1350, description: "1 แผง 500 ส่งฟรี + 🎁 1 กล่อง 1,350 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_สายม่วง Alprazolam_250928_14.jpg" },
+            { id: 6, name: "Xanax Pfizer 0.5mg ( UPJOHN )", category: "Alprazolam", price: 250, boxPrice: 2100, description: "1 แผง 250 5 แผง 1,200 ส่งฟรี + 🎁 1 กล่อง 2,000 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_สายม่วง Alprazolam_250928_12.jpg" },
+            { id: 7, name: "Alprazolam Viatris 0.5mg", category: "Alprazolam", price: 500, boxPrice: 950, description: "1 แผง 500 ( 15 แผง )1 กล่อง 950 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_สายม่วง Alprazolam_250928_8.jpg" },
+            { id: 8, name: "คอนดรัก CONVUSIL 2.0mg", category: "Clonazepam", price: 150, boxPrice: 3550, description: "1 แผง 150 5 แผง 700 ส่งฟรี + 🎁 10 แผง 1,150 ส่งฟรี + 🎁 25 แผง 2,200 ส่งฟรี + 🎁 1 กล่อง 3,550 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_สายขาว โรเช่ คอนเรัก_250928_9.jpg" },
+            { id: 9, name: "โรเช่ไทย CLONARIL 2.0mg", category: "Clonazepam", price: 170, boxPrice: 3950, description: "1 แผง 170 5 แผง 750 ส่งฟรี + 🎁 10 แผง 1,300 ส่งฟรี + 🎁 25 แผง 2,550 ส่งฟรี + 🎁 1 กล่อง 3,950 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_สายขาว โรเช่ คอนเรัก_250928_7.jpg" },
+            { id: 10, name: "พรีนาพริล Prenapil 2.0mg", category: "Clonazepam", price: 180, boxPrice: 4200, description: "1 แผง 180 5 แผง 800 ส่งฟรี + 🎁  10 แผง 1,350 ส่งฟรี + 🎁  25 แผง 2,650 ส่งฟรี + 🎁  1 กล่อง 4,200 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_สายขาว โรเช่ คอนเรัก_250928_8.jpg" },
+            { id: 11, name: "Alpranax 0.5mg", category: "Alprazolam", price: 150, boxPrice: 450, description: "1 แผง 150 1 กล่อง 450 ส่งฟรี +🎁", image: "images/LINE_ALBUM_สายม่วง Alprazolam_250928_1.jpg" },
+            { id: 12, name: "Alprazolam 0.25mg", category: "Alprazolam", price: 150, description: "1 แผง 150", image: "images/LINE_ALBUM_สายม่วง Alprazolam_250928_2.jpg" },
+            { id: 13, name: "Xanax Pfizer 0.5mg", category: "Alprazolam", price: 250, boxPrice: 2100, description: "1 แผง 250 1 กล่อง 2100 ส่งฟรี +🎁", image: "images/LINE_ALBUM_สายม่วง Alprazolam_250928_3.jpg" },
+            { id: 14, name: "Xanax Pfizer 0.5mg ( หลังแดง )", category: "Alprazolam", price: 950, description: "1 กล่อง 950 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_สายม่วง Alprazolam_250928_4.jpg" },
+            { id: 15, name: "Axprazol 0.5mg", category: "Alprazolam", price: 130, boxPrice: 950, description: "1 แผง 130 5 แผง 600 ส่งฟรี +🎁 1 กล่อง 950 ส่งฟรี +🎁", image: "images/LINE_ALBUM_สายม่วง Alprazolam_250928_5.jpg" },
+            { id: 16, name: "Asolan 0.5mg", category: "Alprazolam", price: 130, boxPrice: 950, description: "1 แผง 130 5 แผง 600 ส่งฟรี +🎁 1 กล่อง 950 ส่งฟรี +🎁", image: "images/LINE_ALBUM_สายม่วง Alprazolam_250928_6.jpg" },
+            { id: 17, name: "Alprazolam Viatris 0.5mg", category: "Alprazolam", price: 950, description: "1 กล่อง 950 ส่งฟรี + 🎁", badge: "ขายดี", image: "images/LINE_ALBUM_สายม่วง Alprazolam_250928_7.jpg" },
+            { id: 18, name: "ปากี 1.0mg", category: "Alprazolam", price: 650, boxPrice: 5000, description: "1 แผง 650 1 กล่อง 2,5000 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_สายม่วง Alprazolam_250928_9.jpg" },
+            { id: 19, name: "Alprazolam EG", category: "Alprazolam", price: 950, description: "1 กล่อง 950 ส่งฟรี + 🎁 ", image: "images/LINE_ALBUM_สายม่วง Alprazolam_250928_10.jpg" },
+            { id: 20, name: "Zentiva 0.5mg", category: "Alprazolam", price: 1000, description: "1 กล่อง 1000 ส่งฟรี +🎁", badge: "แนะนำ", image: "images/LINE_ALBUM_สายม่วง Alprazolam_250928_11.jpg" },
+            { id: 21, name: "Xanax viatris0.5mg", category: "Alprazolam", price: 950, description: "1 กล่อง 950 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_สายม่วง Alprazolam_250928_13.jpg" },
+            { id: 22, name: "Rivotril", category: "Clonazepam", price: 35, boxPrice: 2000, description: "1 แผง 35 10 แผง 300  25 แผง 650 ส่งฟรี + 🎁  50 แผง 1,200 ส่งฟรี + 🎁  1 กระปุก 2,000 ส่งฟรี + 🎁", badge: "NEW", image: "images/LINE_ALBUM_สายขาว โรเช่ คอนเรัก_250928_1.jpg" },
+            { id: 23, name: "คลอซีแพม หลังม่วง CLOZEPAM 2.0", category: "Clonazepam", price: 150, boxPrice: 3550, description: "1 แผง 150 5 แผง 700 ส่งฟรี + 🎁  10 แผง 1,150 ส่งฟรี + 🎁 25 แผง 2,250 ส่งฟรี + 🎁 1 กล่อง 3,550 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_สายขาว โรเช่ คอนเรัก_250928_3.jpg" },
+            { id: 24, name: "Povanil 2.0mg", category: "Clonazepam", price: 150, boxPrice: 3550, description: "1 แผง 150 5 แผง 700 ส่งฟรี + 🎁 10 แผง 1,150 ส่งฟรี + 🎁 25 แผง 2,250 ส่งฟรี + 🎁 1 กล่อง 3,550 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_สายขาว โรเช่ คอนเรัก_250928_4.jpg" },
+            { id: 25, name: "Supreme/collagen", category: "สายชิล", price: 2500, description: "1 กระปุก 2500", image: "images/LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_1.jpg" },
+            { id: 26, name: "Gabapentin 300mg", category: "สายชิล", price: 120, description: "1 แผง 120", image: "images/LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_2.jpg" },
+            { id: 27, name: "MADOLA", category: "สายชิล", price: 50, boxPrice: 1650, description: "1 แผง 50, 1 กล่อง 1650", image: "images/LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_3.jpg" },
+            { id: 28, name: "FATEX", category: "สายชิล", price: 85, boxPrice: 1650, description: "1 แผง 85, 1 กล่อง 1650", image: "images/LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_4.jpg" },
+            { id: 29, name: "Axioda", category: "สายชิล", price: 900, description: "1 กระปุก 900", image: "images/LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_5.jpg" },
+            { id: 30, name: "Diazepam10 D10", category: "สายชิล", price: 550, description: "1 แผง 550", image: "images/LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_6.jpg" },
+            { id: 31, name: "KAMAGRA Oral jelly", category: "สายชิล", price: 60, boxPrice: 250, description: "1 ซอง 60, 1 กล่อง 250", image: "images/LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_7.jpg" },
+            { id: 32, name: "SUPER KAMAGRA", category: "สายชิล", price: 100, boxPrice: 350, description: "1 แผง 100, 1 กล่อง 350", image: "images/LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_8.jpg" },
+            { id: 33, name: "มอร์ฟีนน้ำ", category: "สายชิล", price: 1000, description: "1 ขวด 1000", image: "images/LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_9.jpg" },
+            { id: 34, name: "POLIZEP", category: "สายชิล", price: 100, description: "1 แผง 100", image: "images/LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_10.jpg" },
+            { id: 35, name: "Ketamine", category: "สายชิล", price: 1550, description: "1 ขวด 1550", image: "images/LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_11.jpg" },
+            { id: 36, name: "TRAMADOL", category: "สายชิล", price: 50, boxPrice: 1650, description: "1 แผง 50, 1 กล่อง 1650", image: "images/LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_12.jpg" },
+            { id: 37, name: "KAMAGRA LOVEGRA", category: "สายชิล", price: 80, boxPrice: 300, description: "LOVEGRA 1 แผง 80, 1 กล่อง 300", image: "images/LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_13.jpg" },
+            { id: 38, name: "TRAMED5", category: "สายชิล", price: 50, boxPrice: 500, description: "1 แผง 50, 1 กล่อง 500", image: "images/LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_14.jpg" },
+            { id: 39, name: "NEUTEPINE 200mg", category: "สายชิล", price: 250, boxPrice: 700, description: "1 แผง 250, 1 กล่อง 700", image: "images/LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_15.jpg" },
+            { id: 40, name: "ZAMIR 30mg", category: "สายชิล", price: 300, boxPrice: 1400, description: "30mg 1 แผง 300, 1 กล่อง 1400 + ส่งฟรี 🎁", image: "images/LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_16.jpg" },
+            { id: 41, name: "ZAMIR 15mg", category: "สายชิล", price: 250, boxPrice: 1200, description: "1 แผง 250, 1 กล่อง 1200 + ส่งฟรี 🎁", image: "images/LINE_ALBUM_สายชิล D10 แคป น้ำ คามากร้า_250928_17.jpg" },
+            { id: 42, name: "Lexopam 6", category: "Clonazepam", price: 250, boxPrice: 2000, description: "1 แผง 250 5 แผง 1200 + ส่งฟรี 🎁 1 กล่อง 2,000 + ส่งฟรี 🎁", image: "images/LINE_ALBUM_สายขาว โรเช่ คอนเรัก_250928_5.jpg" },
+            { id: 43, name: "Ritaline LA", category: "สายดม ฮ๊อต Rita", price: 4300, description: "1 กล่อง 4,300 + ส่งฟรี 🎁", image: "images/LINE_ALBUM_สายดม ฮ๊อต Rita_250928_1.jpg" },
+            { id: 44, name: "Promethazine 25mg ( อัดเม็ด )", category: "สายจูน ของนอก", price: 500, description: "1 กล่อง 500 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_ของนอก สายจูน_250928_1.jpg" },
+            { id: 45, name: "Nan Codeine", category: "สายจูน ของนอก", price: 150, boxPrice: 1200, description: "1 แผง 150 5 แผง 700 ส่งฟรี + 🎁 1 กล่อง 1,200 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_ของนอก สายจูน_250928_2.jpg" },
+            { id: 46, name: "CODEINE SANT 30", category: "สายจูน ของนอก", price: 600, description: "1 กล่อง 600 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_ของนอก สายจูน_250928_3.jpg" },
+            { id: 47, name: "Paderyl 19.5 ( กล่อง )", category: "สายจูน ของนอก", price: 550, description: "1 กล่อง 550 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_ของนอก สายจูน_250928_4.jpg" },
+            { id: 48, name: "Tussipax", category: "สายจูน ของนอก", price: 550, description: "1 กล่อง 550 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_ของนอก สายจูน_250928_5.jpg" },
+            { id: 49, name: "Promaphec 25mg", category: "สายจูน ของนอก", price: 600, description: "1 กล่อง 600 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_ของนอก สายจูน_250928_6.jpg" },
+            { id: 50, name: "PPM", category: "สายจูน ของนอก", price: 500, description: "1 กล่อง 500 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_ของนอก สายจูน_250928_7.jpg" },
+            { id: 51, name: "Milam15mg", category: "สายจูน ของนอก", price: 1500, description: "1 แผง 1500 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_ของนอก สายจูน_250928_8.jpg" },
+            { id: 52, name: "Midorest15mg", category: "สายจูน ของนอก", price: 1500, description: "1 แผง 1500 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_ของนอก สายจูน_250928_9.jpg" },
+            { id: 53, name: "ZEPAM10", category: "สายจูน ของนอก", price: 150, boxPrice: 1200, description: "1 แผง 150 1 กล่อง 1,200 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_ของนอก สายจูน_250928_10.jpg" },
+            { id: 54, name: "Domicum 7.5", category: "สายจูน ของนอก", price: 750, description: "1 แผง 750 + ส่งฟรี 🎁", image: "images/LINE_ALBUM_ของนอก สายจูน_250928_11.jpg" },
+            { id: 55, name: "Happy 5 ( ERIMIN5 )", category: "สายจูน ของนอก", price: 170, boxPrice: 1550, description: "1 แผง 170, 1 กล่อง 1,550 ส่งฟรี + 🎁", image: "images/LINE_ALBUM_ของนอก สายจูน_250928_12.jpg" }
+            ];
+
 
         let currentCategory = "all";
         let currentSort = "priceDesc";
@@ -938,11 +940,14 @@
 
             // เรียงลำดับ
             if (currentSort === "priceDesc") {
-                filtered.sort((a, b) => b.price - a.price);
+                filtered.sort((a, b) => (b.price || b.boxPrice || 0) - (a.price || a.boxPrice || 0));
             } else if (currentSort === "priceAsc") {
-                filtered.sort((a, b) => a.price - b.price);
-            } else if (currentSort === "name") {
-                filtered.sort((a, b) => a.name.localeCompare(b.name, "th"));
+                filtered.sort((a, b) => (a.price || a.boxPrice || 0) - (b.price || b.boxPrice || 0));
+            }
+            else if (currentSort === "nameAsc") {
+                filtered.sort((a, b) => a.name.localeCompare(b.name));
+            } else if (currentSort === "nameDesc") {
+                filtered.sort((a, b) => b.name.localeCompare(a.name));
             }
 
             // วาดสินค้า
@@ -961,7 +966,10 @@
                         <div class="product-name">${product.name}</div>
                         <div class="product-description">${product.description}</div>
                         <div class="product-price">
-                            <span class="price-tag">฿${product.price}</span>
+                            <span class="price-tag">
+                                ฿${product.price}${product.boxPrice ? ` / กล่อง ${product.boxPrice}` : ""}
+                            </span>
+
                         </div>
                         <button class="buy-button" onclick="buyProduct('${product.name}')">สั่งซื้อ</button>
                     </div>
@@ -970,18 +978,21 @@
             });
         }
 
+        products.sort((a, b) => b.price - a.price);
+
         // ค้นหา
         function searchProducts() {
             displayProducts();
         }
 
         // กรองตามหมวดหมู่
-        function filterCategory(cat) {
+        function filterCategory(event, cat) {
             currentCategory = cat;
             document.querySelectorAll(".category-btn").forEach(btn => btn.classList.remove("active"));
             event.target.classList.add("active");
             displayProducts();
         }
+
 
         // เรียงลำดับ
         function sortProducts() {
